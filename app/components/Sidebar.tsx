@@ -18,13 +18,13 @@ interface Bubble {
 }
 
 const sections: Section[] = [
+  { id: "blog", label: "Blog", href: "/blog" },
   { id: "hero", label: "Hero", href: "#hero" },
   { id: "about", label: "About", href: "#about" },
   { id: "history", label: "History", href: "#history" },
   { id: "stacks", label: "Stacks", href: "#stacks" },
   { id: "projects", label: "Projects", href: "#projects" },
   { id: "contact", label: "Contact", href: "#contact" },
-  { id: "blog", label: "Blog", href: "/blog" },
 ];
 
 export default function Sidebar() {
@@ -115,7 +115,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* 공기방울 효과 - 버튼 색상에 맞춰 */}
       {isOpen && (
         <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
           {bubbles.map((bubble) => (
@@ -165,41 +164,38 @@ export default function Sidebar() {
       {/* Navigate 메뉴 - 아래에서 위로 올라오는 애니메이션 */}
       <div
         ref={sidebarRef}
-        className={`fixed bottom-24 right-0 z-40 flex flex-col gap-4 items-end pr-4 transition-all duration-500 ${
+        className={`fixed bottom-44 right-[16px] z-50 flex flex-col gap-4 items-end pr-4 transition-all duration-500 ${
           isOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-8 pointer-events-none"
         }`}
       >
-        {sections
-          .slice()
-          .reverse()
-          .map((section, reverseIndex) => {
-            const index = sections.length - 1 - reverseIndex; // 원래 인덱스
-            const buttonSize = getButtonSize(index, sections.length);
-            const rightPos = getButtonPosition(index);
-            return (
-              <button
-                key={section.id}
-                onClick={() => handleSectionClick(section.href)}
-                className={`rounded-full shadow-lg transition-all duration-500 flex items-center justify-center font-semibold hover:scale-110 px-3 ${getButtonStyles()} ${
-                  isOpen
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{
-                  minWidth: `${buttonSize}px`,
-                  height: `${buttonSize}px`,
-                  right: `${rightPos}px`,
-                  fontSize: `${Math.max(buttonSize * 0.25, 12)}px`,
-                  transitionDelay: `${reverseIndex * 0.1}s`,
-                }}
-                title={section.label}
-              >
-                <span className="whitespace-nowrap">{section.label}</span>
-              </button>
-            );
-          })}
+        {sections.map((section, index) => {
+          // index: 0 = Hero (위), 마지막 = Blog (아래) — 시각적 순서 유지
+          const total = sections.length;
+          const buttonSize = getButtonSize(index, total);
+          const rightPos = getButtonPosition(index);
+          const animationDelay = (total - 1 - index) * 0.1;
+          return (
+            <button
+              key={section.id}
+              onClick={() => handleSectionClick(section.href)}
+              className={`rounded-full shadow-lg transition-all duration-500 flex items-center justify-center font-semibold hover:scale-110 px-3 ${getButtonStyles()} ${
+                isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+              style={{
+                minWidth: `${buttonSize}px`,
+                height: `${buttonSize}px`,
+                right: `${rightPos}px`,
+                fontSize: `${Math.max(buttonSize * 0.25, 12)}px`,
+                transitionDelay: `${animationDelay}s`,
+              }}
+              title={section.label}
+            >
+              <span className="whitespace-nowrap">{section.label}</span>
+            </button>
+          );
+        })}
       </div>
     </>
   );
