@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface Bubble {
   id: number;
@@ -11,6 +12,7 @@ interface Bubble {
 }
 
 export default function CursorBubbles() {
+  const { theme } = useTheme();
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const bubbleIdRef = useRef(0);
   const lastBubbleTimeRef = useRef(0);
@@ -56,12 +58,20 @@ export default function CursorBubbles() {
     };
   }, []);
 
+  const getBubbleStyles = () => {
+    if (theme === "dark") {
+      return "bg-white/40 border-white/60";
+    } else {
+      return "bg-[var(--accent)]/40 border-[var(--accent)]/60";
+    }
+  };
+
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       {bubbles.map((bubble) => (
         <div
           key={bubble.id}
-          className="absolute rounded-full bg-white/40 border border-white/60"
+          className={`absolute rounded-full border ${getBubbleStyles()}`}
           style={{
             left: `${bubble.x}px`,
             top: `${bubble.y}px`,

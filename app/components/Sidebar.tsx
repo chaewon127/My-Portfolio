@@ -48,7 +48,7 @@ export default function Sidebar() {
       const newBubble: Bubble = {
         id: bubbleIdRef.current++,
         x: 90 + Math.random() * 5, // 오른쪽 영역에 생성 (90-95%)
-        y: 5 + Math.random() * 80, // 하단 영역에서 시작
+        y: 40 + Math.random() * 40, // 하단 영역에서 시작
         size: 8 + Math.random() * 12,
         animationDuration,
       };
