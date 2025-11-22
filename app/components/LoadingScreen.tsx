@@ -1,8 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 
-export default function LoadingScreen({ onComplete }: { onComplete: () => void }) {
+export default function LoadingScreen({
+  onComplete,
+}: {
+  onComplete: () => void;
+}) {
+  const { theme } = useTheme();
   const [progress, setProgress] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -24,6 +30,14 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     return () => clearInterval(interval);
   }, [onComplete]);
 
+  const getBubbleStyles = () => {
+    if (theme === "dark") {
+      return "bg-white/40 border-white/60";
+    } else {
+      return "bg-[var(--accent)]/40 border-[var(--accent)]/60";
+    }
+  };
+
   return (
     <div
       className={`fixed inset-0 z-[100] bg-[var(--bg-primary)] flex flex-col items-center justify-center transition-opacity duration-500 ${
@@ -44,9 +58,17 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
           </svg>
         </div>
         {/* 공기방울 */}
-        <div className="absolute top-10 left-10 w-4 h-4 rounded-full bg-white/40 border border-white/60 animate-bubble-rise" />
-        <div className="absolute top-20 right-10 w-3 h-3 rounded-full bg-white/40 border border-white/60 animate-bubble-rise" style={{ animationDelay: "0.3s" }} />
-        <div className="absolute top-30 left-20 w-2 h-2 rounded-full bg-white/40 border border-white/60 animate-bubble-rise" style={{ animationDelay: "0.6s" }} />
+        <div
+          className={`absolute top-10 left-10 w-4 h-4 rounded-full animate-bubble-rise ${getBubbleStyles()}`}
+        />
+        <div
+          className={`absolute top-20 right-10 w-3 h-3 rounded-full animate-bubble-rise ${getBubbleStyles()}`}
+          style={{ animationDelay: "0.3s" }}
+        />
+        <div
+          className={`absolute top-30 left-20 w-2 h-2 rounded-full animate-bubble-rise ${getBubbleStyles()}`}
+          style={{ animationDelay: "0.6s" }}
+        />
       </div>
       <div className="w-64 h-1 bg-[var(--border)] rounded-full overflow-hidden">
         <div
@@ -58,4 +80,3 @@ export default function LoadingScreen({ onComplete }: { onComplete: () => void }
     </div>
   );
 }
-
