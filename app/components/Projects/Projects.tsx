@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import ProjectCard from "./ProjectCard";
+import TiltCard from "./TiltCard";
 import ProjectModal from "./ProjectModal";
 
 interface Project {
@@ -109,7 +109,7 @@ export default function Projects() {
         >
           <div className="flex gap-6 w-max px-2">
             {projects.map((project) => (
-              <ProjectCard
+              <TiltCard
                 key={project.id}
                 title={project.title}
                 description={project.description}

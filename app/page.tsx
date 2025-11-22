@@ -21,7 +21,7 @@ export default function Home() {
     <div className="min-h-screen">
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       {!isLoading && (
-        <>
+        <div>
           <CursorBubbles />
           <Header />
           <main>
@@ -46,7 +46,7 @@ export default function Home() {
           </main>
           <Sidebar />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );

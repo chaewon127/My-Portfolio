@@ -13,7 +13,7 @@ interface ProjectCardProps {
   onCardClick?: () => void;
 }
 
-export default function ProjectCard({
+export default function TiltCard({
   title,
   description,
   image,

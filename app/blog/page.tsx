@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import BlogCard from "../components/Blog/BlogCard";
+import FlipCard from "../components/Blog/FlipCard";
 import ProjectModal from "../components/Projects/ProjectModal";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer/Footer";
 import CursorBubbles from "../components/CursorBubbles";
+import LoadingScreen from "../components/LoadingScreen";
 
 interface BlogPost {
   id: string;
@@ -78,7 +79,7 @@ export default function BlogPage() {
             Blog
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="masonry">
             {posts.map((post, index) => {
               // 카드 높이를 다양하게 (300px ~ 500px)
               const heights = [
@@ -89,13 +90,13 @@ export default function BlogPage() {
               return (
                 <div
                   key={post.id}
-                  className={`animate-section-fade-in`}
+                  className={`animate-section-fade-in masonry-item`}
                   style={{
                     animationDelay: `${(index % 6) * 0.1}s`,
                     height: `${height}px`,
                   }}
                 >
-                  <BlogCard
+                  <FlipCard
                     title={post.title}
                     description={post.description}
                     fullDescription={post.fullDescription}

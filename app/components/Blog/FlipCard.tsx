@@ -15,7 +15,7 @@ interface BlogCardProps {
   onCardClick?: () => void;
 }
 
-export default function BlogCard({
+export default function FlipCard({
   title,
   description,
   fullDescription,
@@ -35,9 +35,9 @@ export default function BlogCard({
   };
 
   return (
-    <div className="w-full h-full perspective-1000">
+    <div className="w-full h-full perspective-[1500px]">
       <div
-        className={`relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] ${
+        className={`relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] ease-[cubic-bezier(0.25, 0.8, 0.25, 1)] ${
           isFlipped ? "[transform:rotateY(180deg)]" : ""
         }`}
         onMouseEnter={() => setIsFlipped(true)}
@@ -45,7 +45,7 @@ export default function BlogCard({
         onClick={handleCardClick}
       >
         {/* 카드 앞면 */}
-        <div className="absolute inset-0 [backface-visibility:hidden]">
+        <div className="absolute inset-0 [backface-visibility:hidden] will-change-transform">
           <div className="relative w-full h-full">
             <div className="flex items-center justify-center w-full h-full bg-[var(--border)]/50 border border-[var(--border)] rounded-lg overflow-hidden">
               {image ? (
@@ -69,7 +69,7 @@ export default function BlogCard({
         </div>
 
         {/* 카드 뒷면 */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] will-change-transform">
           <div className="w-full h-full bg-[var(--border)]/70 border border-[var(--border)] rounded-lg p-4 flex flex-col cursor-pointer">
             <p className="text-sm text-[var(--accent)] mb-2">{date}</p>
             <p className="w-full flex-1 flex items-center justify-center text-[var(--text-secondary)] text-center mb-4">
