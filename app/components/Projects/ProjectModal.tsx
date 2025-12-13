@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 interface ProjectModalProps {
@@ -27,7 +27,7 @@ export default function ProjectModal({
   githubUrl,
 }: ProjectModalProps) {
   // 모달이 열렸을 때 배경 스크롤 방지
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
